@@ -11,14 +11,12 @@
             "id": "64ed414a825fd061",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "AI System Implementation.md",
-                "mode": "source",
-                "source": false
+                "file": "pc/2/COMP8260-Class2.pdf"
               },
-              "icon": "lucide-file",
-              "title": "AI System Implementation"
+              "icon": "lucide-file-text",
+              "title": "COMP8260-Class2"
             }
           }
         ]
@@ -164,11 +162,20 @@
   },
   "active": "64ed414a825fd061",
   "lastOpenFiles": [
+    "pc/2/index.ipynb",
+    "pc/2/draft1.ipynb",
+    "pc/2/index.html",
+    "lecture/2/Note.md",
+    "lecture/1/AI System Implementation.md",
+    "lecture/AI Systems implementation project brief-2025.pdf",
+    "lecture/1/Lecture1_Overview.pdf",
+    "lecture/Lecture1_Overview.pdf",
+    "lecture/2/~$Lecture2.pptx",
+    "pc/2/COMP8260-Class2.pdf",
+    "lecture/2/Lecture2.pptx",
+    "lecture/2/Lecture3.pptx",
     "L2 - Moments.pdf",
     "AI System Implementation.md",
-    "Class 1 Moment Tester-SKELETON.ipynb",
-    "L2 - Moments black-and-white.pdf",
-    "Class 1 Moment Tester-SKELETON.ipynb.json",
     "Welcome.md"
   ]
 }
