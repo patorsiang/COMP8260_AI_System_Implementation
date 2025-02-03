@@ -1,0 +1,106 @@
+- Abstract Patterns and Features
+	- Features
+		- type
+			- Raw quantitive data
+				- numerical data, boolean values, vectors, and even images
+			- Direct features
+				- Edge detection, detected circles/ellipses, Spectrograms
+			- Abstract features
+				- Region textures, **Moments**
+		- problem
+			- insufficient training data
+			- unrepresentative training data
+			- irrelevant features
+			- poor quality data
+	- Abstract features: Moments
+		- Calculating Moments
+			- ![[Screenshot 2568-02-01 at 13.34.45.png]]
+			- m = moment
+			- $moment_{pq}$ the $pq^{th}$ moment
+			- x,y = pixel
+		- normalized moment
+			- ![[Screenshot 2568-02-01 at 13.57.55.png]]
+- Classification and trees
+	- Classification
+		- supervised learning
+		- predict any categorical - multiple-choice target feature
+	- Data preparation
+		- Splitting data into train set and test set
+		- Data Cleaning/ imputation
+			- `np.nan` or `pd.NA` --> filled or dropping
+			- duplication --> dropping or keeping
+		- Data preparation
+			- Categorical values -> encode, one-hot encoding, some algorithms
+			- Scaling/Standardisation of numerical features (PCA, SVM)
+			- for undersampling or oversampling -> imbalanced learn package
+		- Pipelines
+			- composed by a sequence of transformers that transform the input for the next transformer or for the final predictor
+			- used for easily repeated and tuned
+	- Scikit-learn (sklearn) design
+		- estimators
+			- `fit()` for supervised learning
+			- `set_params()` and `get_params()` how to know and set the hyperparameters 
+		- transformers
+			- `transform(x)`: e.g., like using `pca.fit(x)` and `fit_transform()`
+		- predictors: `predict(x)`, provide predictions from observations  
+		- pipeline
+			- a set of transformers and a final predictor
+			- `pipeline.fit(x)`: invoke transformation step
+			- `pinpeline.predict(x)`: invoke transformation on each step and predict on the final predictor
+	- classification algorithm 
+		- binary algorithms 
+			- Support Vector Machine (SVM)
+			- Logistic Regression
+			- Stochastic Gradient Descent
+		- Multiclass algorithms
+			- Naive Bayes
+			- Decision Tree
+		** binary algorithms can be useful for multiclass problems with M label
+		- one-vs-one strategy
+			- distinguish every couple of labels
+			- M(M-1)/2 -> N/M**2
+		- one-vs-all strategy
+			- distinguish class from non-class
+			- predictors, each trained on a full dataset
+	- model evaluation
+		- how good is the resulting model
+		- overfitting or not
+			- overfitting and underfitting
+				- overfitting -> It memorizes the training set and is not good at generalizing to new inputs
+				- underfitting -> not powerful enough to learn/explain the training data (low training accuracy)
+			- increasing the model complexity by reducing bias and increasing variance, called bias-variance tradeoff
+			- hyperparameters and cross-validation
+				- e.g., in decision tree models, fix a maximum depth or number of leaves
+				- hyperparameter should be evaluated using a portion of the training dataset called the validation set
+		- Metrics
+			- binary classifier accuracy = (TP + TN) / (TP + TN + FP + FN)
+			- precision = TP / (TP + FP)
+			- Recall: 
+				- For positive class (Sensitivity) = TP / (TP + FN)
+				- For negative class (Sensitivity) = TN / (TN + FP)
+			- F1 score: TP / (TP + (FP + FN) / 2)
+	- Decision Trees
+		- idea: recursively split dataset on an attribute-condition-value -> ensemble
+	- Ensemble models
+		- aggregating multiple trained models to improve predictions![[Screenshot 2568-02-01 at 18.02.04.png]]
+			- voting classifier 
+			- average model irregularities -> decrease variance, reduce overfitting
+			- parallelize train
+			- example:
+				- `VotingClassifier`
+				- `BaggingClassifier` for patches and subspaces
+				- `RandomForest`: random patches with decision trees
+				- `Boosting`: Train predictors sequentially
+				- `Adaboost`: increase the weight of misclassified instances, uniform weights
+				- `Gradient Tree Boosting`
+	- Convolutional Neural Networks (CNN)
+		- Convolutional layer ![[Screenshot 2568-02-01 at 18.19.18.png]]
+			- 1 Dimensional ![[Screenshot 2568-02-01 at 18.19.28.png]]
+			- 2 Dimensional ![[Screenshot 2568-02-01 at 18.20.56.png]] ![[Screenshot 2568-02-01 at 18.21.16.png]]
+			- Pooling Layer
+				- Max Pooling![[Screenshot 2568-02-01 at 18.22.05.png]]![[Screenshot 2568-02-01 at 18.22.30.png]]
+		- ![[Screenshot 2568-02-01 at 18.23.12.png]]
+		- ![[Screenshot 2568-02-01 at 18.23.35.png]]
+		- ![[Screenshot 2568-02-01 at 18.23.52.png]]
+		- ![[Screenshot 2568-02-01 at 18.24.05.png]]![[Screenshot 2568-02-01 at 18.24.55.png]]![[Screenshot 2568-02-01 at 18.25.03.png]]![[Screenshot 2568-02-01 at 18.25.36.png]]
+		

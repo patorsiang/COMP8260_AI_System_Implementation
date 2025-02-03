@@ -4,19 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "53fc3ac5973056aa",
+        "id": "65bc89edcf800f9a",
         "type": "tabs",
         "children": [
           {
-            "id": "64ed414a825fd061",
+            "id": "940312a2bc33996e",
             "type": "leaf",
             "state": {
               "type": "pdf",
               "state": {
-                "file": "pc/2/COMP8260-Class2.pdf"
+                "file": "snapshot/AI Systems implementation project brief-2025.pdf"
               },
               "icon": "lucide-file-text",
-              "title": "COMP8260-Class2"
+              "title": "AI Systems implementation project brief-2025"
             }
           }
         ]
@@ -38,7 +38,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -160,21 +161,32 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "64ed414a825fd061",
+  "active": "e24dfc7fef3e26e0",
   "lastOpenFiles": [
+    "snapshot",
+    "lecture/Summary.md",
+    "snapshot/Screenshot 2568-02-01 at 18.25.36.png",
+    "snapshot/Screenshot 2568-02-01 at 18.25.03.png",
+    "snapshot/Screenshot 2568-02-01 at 18.24.55.png",
+    "snapshot/Screenshot 2568-02-01 at 18.24.05.png",
+    "snapshot/Screenshot 2568-02-01 at 18.23.52.png",
+    "snapshot/Screenshot 2568-02-01 at 18.23.35.png",
+    "snapshot/Screenshot 2568-02-01 at 18.23.12.png",
+    "snapshot/Screenshot 2568-02-01 at 18.22.30.png",
+    "snapshot/Screenshot 2568-02-01 at 18.22.05.png",
+    "snapshot/Screenshot 2568-02-01 at 18.21.16.png",
+    "lecture/2/Note.md",
+    "snapshot/AI Systems implementation project brief-2025.pdf",
+    "dataset",
+    "pc/2/COMP8260-Class2.pdf",
     "pc/2/index.ipynb",
     "pc/2/draft1.ipynb",
     "pc/2/index.html",
-    "lecture/2/Note.md",
     "lecture/1/AI System Implementation.md",
     "lecture/AI Systems implementation project brief-2025.pdf",
     "lecture/1/Lecture1_Overview.pdf",
     "lecture/Lecture1_Overview.pdf",
     "lecture/2/~$Lecture2.pptx",
-    "pc/2/COMP8260-Class2.pdf",
-    "lecture/2/Lecture2.pptx",
-    "lecture/2/Lecture3.pptx",
-    "L2 - Moments.pdf",
     "AI System Implementation.md",
     "Welcome.md"
   ]
