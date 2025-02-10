@@ -103,4 +103,67 @@
 		- ![[Screenshot 2568-02-01 at 18.23.35.png]]
 		- ![[Screenshot 2568-02-01 at 18.23.52.png]]
 		- ![[Screenshot 2568-02-01 at 18.24.05.png]]![[Screenshot 2568-02-01 at 18.24.55.png]]![[Screenshot 2568-02-01 at 18.25.03.png]]![[Screenshot 2568-02-01 at 18.25.36.png]]
-		
+- Reinforcement Learning
+	- 5 elements
+		- Environments
+			- Farama Gymnasium = OpenAI Gym
+				- a collection of simulations and environments
+				- to simulate step by step whilst connecting to an agent
+				- hug variety
+				- use a tabular-based Q-learning
+					- Q-learning
+						- **a reinforcement learning algorithm that finds an optimal action-selection policy for any finite Markov decision process (MDP)** 
+						- A Markov model is ==a stochastic model that describes a sequence of events where the probability of each event depends on the previous event==. It's used in probability theory, statistics, and decision analysis
+							- Applications e.g.,
+								- **Weather**
+								    A Markov model can be used to predict the weather, for example, by modeling the probability of a sunny day being followed by another sunny day. 
+								- **Healthcare**
+								    A Markov model can be used to model the health of patients over time, including the progression of disease and the effects of medical interventions. 
+						- Q-Table
+							- States ($S_t$) with Q-Value
+								- Q-Value: showing that the algorithm thinks it would be the best decision
+						- Update Formula ![[Screenshot 2568-02-10 at 10.21.21.png]]
+						- utilise epsilon-_greedy Q-learning_, a well-known reinforcement learning algorithm
+						- (SARSA) State-Action-Reward-State-Action
+				- cr. https://gymnasium.farama.org/introduction/basic_usage/
+		- States ($S_t$) - the current state of the scenario (a value or array of value) 
+		- Actions ($A_t$) - An array representing some forces to be applied in the simulation
+		- Rewards ($R_t$) - A value representing how the system performed
+		- Agents - The system that reads the states
+	- Policies -  set the observation space, action space, and reward.
+	- Basic Neural Network
+	- Credit assignment -  every task of agent has reward and reduction. 
+- Genetic algorithms (GA) and Neuroevolution
+	- fitness function - measuring the quality of each solution
+	- method
+		- Selection
+			- Roulette-whee;
+			- Tournament-based
+			- Truncation
+		- Replication
+			- One-point crossover
+			- Multipoint crossover
+			- Uniform crossover
+		- Mutation
+		- Elitism
+	- Applying GA to NN for 
+		- evolving NN weights
+		- alternative to backpropagation based on gradients
+			- backpropagation - technique of train
+			- gradient range of environment
+	- NeuroEvolution of Augmenting Topologies (NEAT), used for 
+		- is an evolutionary algorithm that creates artificial neural networks.
+		- Method
+			- encoding
+				- Mutation - weight mutation
+					- ![[Screenshot 2568-02-10 at 10.42.15.png]]![[Screenshot 2568-02-10 at 10.42.31.png]]
+			- Crossover
+				- First of all, we need to select a dominant parent. This is the parent that will specify the structure of the child's network.
+				- Secondly, we find all of the connections shared by both parents. You’d think this would be difficult, but since we have innovation numbers, we can just take each connection whose innovation number appears in both parent networks.
+				- For any connection shared by both parents, we randomly give the child one of the connections. This ensures that the weights of any shared connection in the child network will randomly come from either parent.
+				- Finally, for any connections not shared by both networks, the child inherits them from the dominant parent.
+				- ![[Screenshot 2568-02-10 at 10.44.06.png]]
+			- Niching
+				- how to manage the evolution of topologies and weights at the same time
+				- defending the compatibility threshold by $c_1 \triangle{G} + x_2 \triangle{W}$, Average of G and Average of W
+				- 

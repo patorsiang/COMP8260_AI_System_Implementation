@@ -1,0 +1,348 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "b493592a",
+   "metadata": {},
+   "source": [
+    "# Neuroevolution class\n",
+    "\n",
+    "In this class we will investigate the use of Neat to solve the [Gym Lunar Lander game](https://www.gymlibrary.dev/environments/box2d/lunar_lander/).\n",
+    "\n",
+    "First execute the following code which is used to render Gym environments in jupyter:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e7e8fba0-34d1-45d8-a826-fce592dd8e4b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Virtual display\n",
+    "from pyvirtualdisplay import Display\n",
+    "\n",
+    "virtual_display = Display(visible=0, size=(14, 9))\n",
+    "virtual_display.start()\n",
+    "import matplotlib.pyplot as plt\n",
+    "%matplotlib inline\n",
+    "from IPython import display\n",
+    "\n",
+    "def jrender(env, step=0, info=\"\"):\n",
+    "    plt.figure(\"display\",(100,3))\n",
+    "    plt.clf()\n",
+    "    plt.imshow(env.render())\n",
+    "    plt.title(\"%s | Step: %d | %s\" % (env.spec.id,step, info))\n",
+    "    plt.axis('off')\n",
+    "\n",
+    "    display.clear_output(wait=True)\n",
+    "    display.display(plt.gcf())\n",
+    "    plt.close()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a3c67a42",
+   "metadata": {},
+   "source": [
+    "## Task 1: Gym\n",
+    "\n",
+    "Create an instance of the `LunarLander-v2` modifying the following example (modified from https://www.gymlibrary.dev/content/basic_usage/ )\n",
+    "\n",
+    "Before running the code make the following changes:\n",
+    "- change render_mode to \"rgb_array\"\n",
+    "- modify the code to run for 200 steps\n",
+    "- add `jrender(env)` as the last instruction of the for loop to update the screen\n",
+    "- pass the step number as second parameter to the jrender"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "be818088",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import gym\n",
+    "env = gym.make(\"LunarLander-v2\", render_mode=\"human\")\n",
+    "\n",
+    "observation, info = env.reset()\n",
+    "\n",
+    "for _ in range(1000):\n",
+    "    observation, reward, terminated, truncated, info = env.step(env.action_space.sample())\n",
+    "\n",
+    "    if terminated or truncated:\n",
+    "        observation, info = env.reset()\n",
+    "\n",
+    "env.close()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4565ad32-c2a8-4a9e-94a1-802780a369bd",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "1a6212c7",
+   "metadata": {},
+   "source": [
+    "Make the following changes to the code:\n",
+    "- remove the if statement (inlcuding the body) and change the for into a while loop to run the environment while the step method returns not terminated and not truncated\n",
+    "- pass as third parameter to jrender the total reward accumulated so far. You should see the reward decreases of about 100 points when crashing.\n",
+    "- to speedup the visualisation you can change the loop to call jrender every 5 frames or when terminated or truncated (to show the final reward)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "fe169864",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7dc91551",
+   "metadata": {},
+   "source": [
+    "Refresh the different types of observsation and action spaces at https://www.gymlibrary.dev/content/basic_usage/#spaces . Print out the environment observation and action space."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ed93aed2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ef73fe60-0616-437d-a0c2-1d28e664edf5",
+   "metadata": {},
+   "source": [
+    "What does each value in the observation and action space represent? Consult th documentation of [Lunar Lander](https://www.gymlibrary.dev/environments/box2d/lunar_lander/) to find out."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "653ae8ad-4c49-400d-81f9-e410a7bd59b8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "341c72d5",
+   "metadata": {},
+   "source": [
+    "## Task 2: Neat\n",
+    "\n",
+    "We are now experimenting with the basic XOR Neat example.\n",
+    "\n",
+    "- Download the configuration file https://raw.githubusercontent.com/CodeReclaimers/neat-python/master/examples/xor/config-feedforward-partial by running the following"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6dc51f1c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "! wget https://raw.githubusercontent.com/CodeReclaimers/neat-python/master/examples/xor/config-feedforward-partial"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "16a7d47c",
+   "metadata": {},
+   "source": [
+    "You can edit the downloaded file by clicking on it from the jupyter home.\n",
+    "\n",
+    "\n",
+    "Execute the following code (modified version) from the base XOR Neat example at https://neat-python.readthedocs.io/en/latest/xor_example.html"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c36d0b4f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "\"\"\"\n",
+    "2-input XOR example -- this is most likely the simplest possible example.\n",
+    "\"\"\"\n",
+    "\n",
+    "from __future__ import print_function\n",
+    "import os\n",
+    "import neat\n",
+    "# import visualize\n",
+    "\n",
+    "# 2-input XOR inputs and expected outputs.\n",
+    "xor_inputs = [(0.0, 0.0), (0.0, 1.0), (1.0, 0.0), (1.0, 1.0)]\n",
+    "xor_outputs = [   (0.0,),     (1.0,),     (1.0,),     (0.0,)]\n",
+    "\n",
+    "\n",
+    "def eval_genomes(genomes, config):\n",
+    "    for genome_id, genome in genomes:\n",
+    "        genome.fitness = 4.0\n",
+    "        net = neat.nn.FeedForwardNetwork.create(genome, config)\n",
+    "        for xi, xo in zip(xor_inputs, xor_outputs):\n",
+    "            output = net.activate(xi)\n",
+    "            genome.fitness -= (output[0] - xo[0]) ** 2\n",
+    "\n",
+    "\n",
+    "def run(config_file):\n",
+    "    # Load configuration.\n",
+    "    config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,\n",
+    "                         neat.DefaultSpeciesSet, neat.DefaultStagnation,\n",
+    "                         config_file)\n",
+    "\n",
+    "    # Create the population, which is the top-level object for a NEAT run.\n",
+    "    p = neat.Population(config)\n",
+    "\n",
+    "    # Add a stdout reporter to show progress in the terminal.\n",
+    "    p.add_reporter(neat.StdOutReporter(True))\n",
+    "#     stats = neat.StatisticsReporter()\n",
+    "#     p.add_reporter(stats)\n",
+    "#     p.add_reporter(neat.Checkpointer(5))\n",
+    "\n",
+    "    # Run for up to 300 generations.\n",
+    "    winner = p.run(eval_genomes, 300)\n",
+    "\n",
+    "    # Display the winning genome.\n",
+    "    print('\\nBest genome:\\n{!s}'.format(winner))\n",
+    "\n",
+    "    # Show output of the most fit genome against training data.\n",
+    "    print('\\nOutput:')\n",
+    "    winner_net = neat.nn.FeedForwardNetwork.create(winner, config)\n",
+    "    for xi, xo in zip(xor_inputs, xor_outputs):\n",
+    "        output = winner_net.activate(xi)\n",
+    "        print(\"input {!r}, expected output {!r}, got {!r}\".format(xi, xo, output))\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5ea68f63",
+   "metadata": {},
+   "source": [
+    "Execute the run function passing the configuration file `config-feedforward-partial` downloaded before."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e5d2c4a4",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "run(\"config-feedforward-partial\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "87f81cf3",
+   "metadata": {},
+   "source": [
+    "Take a moment to study the evolution progress in the XOR example."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "198a2280",
+   "metadata": {},
+   "source": [
+    "## Task 3: Neat + Gym\n",
+    "\n",
+    "Evolve a controller for the lunar lander starting from the above XOR and Gym examples.\n",
+    "\n",
+    "The evolve_genome function should be changed to evaluate the fitness by computing the total reward accumulated by  each network in the environment:\n",
+    "\n",
+    "- for each genome create a NN from the config and the genes\n",
+    "- reset returns the initial observation\n",
+    "- at each step the action to be applied to the environment could be selected by choosing the output neuron with the highest output e.g. using the `np.argmax` function\n",
+    "- finally remember to set the fitness (total reward) of the genome by setting `genome.fitness`\n",
+    "\n",
+    "As the lunar lander starts with different velocity at each reset the reward obtained in each simulation (episode) will be different. To obtain a more stable fitness you can average the reward over multiple episodes. The number of episodes provide a tradeoff between fitness noise and computation time. You can set it to 5 episodes for now.\n",
+    "\n",
+    "To evolve the agent with gym you can create a copy of the configuration file for the XOR example from the jupiter home and modify the number of inputs and outputs according to the lunar lander gym observation and action spaces. You can set the maximum fitness to 300 or disable the fitness termination check by setting `no_fitness_termination` to `True`.\n",
+    "Full documentation of the parameters is available from the [neat-python doc page](https://neat-python.readthedocs.io/en/latest/)\n",
+    "\n",
+    "Before evolving the agent it would be useful to change the interface of the run function so that returns the population after the evolution and can optionally take a starting population as a parameter. In this way you can call run to evolve the population incrementally.\n",
+    "\n",
+    "Evolve the controller for 10 generations and look at the behaviour of the best controller after the evolution. To do so you can use `population.best_genome` to access the best network after the 10 generations. This can then be used together with a configuration to create a network and simulate it on a new test episode calling jrender after each step as done previously.\n",
+    "\n",
+    "You can also enable the checkpointer to save the progress every 5 generations by uncommenting the appropriate line in the XOR example. A population could be loaded from a checkpoint using `p = neat.Checkpointer().restore_checkpoint(\"neat-checkpoint-[NUM-CHECKPOINT]\"))`"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "d045584b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "86820fac",
+   "metadata": {},
+   "source": [
+    "The fitness of the agent after 10 generations should not be very high. To improve the performance it would usually require quite a high number of generations. Use the following strategies to reduce the training time:\n",
+    "\n",
+    "- **Reward shaping:** Instead of evaluating the agent until the end of the episode you can stop the evaluation after 500-700 steps and decrease the fitness by 100 if the agent has not landed (terminated is False) by that time. Alternatively you can subtract a penalty for every timestep. This would bias the search toward more aggressive landing strategies, which will also terminate faster.\n",
+    "- **Incremental learning:** The fitness obtained averaging 5 episodes (initial conditions) is too noisy for the evolution to progress realiably, using about 20 episodes would make the fitness measurement much more reliable at the cost of substantially increasing the fitness computation time. A possible shortcut is use a fixed set of episodes for a number of generations. This can be done by passing a `seed` parameter (integer) to `env.reset` so that the fitness is evaluated over the same set of episodes across multiple generations. The episode counter could be used as the seed, potentially with some offset. In this way often 40-60 generations are usually sufficient to reach a reasonable fitness (100-200) on the training episodes. You can verify that the agent behaviour is good when tested using the seeds of the training episodes, but it can be significantly worse when the agent is tested using different seeds. Once the fitness has reached a basic flying competence on the training examples you can help the agent learn more general strategies by continuing training on either (i) different seeds, (ii) more episodes, or (iii) revert to random episodes. However there is a chance that the initial set of episodes would not be very representative of general cases and thus the evolution could overfit to a deep local minima and take a long time to recover when presented different episodes. This can also happen if the agent is trained for too long on the same episodes."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5f36a531",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "..."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.12"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

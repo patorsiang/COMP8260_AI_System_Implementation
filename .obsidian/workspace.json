@@ -11,12 +11,14 @@
             "id": "940312a2bc33996e",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "snapshot/AI Systems implementation project brief-2025.pdf"
+                "file": "lecture/Summary.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-file-text",
-              "title": "AI Systems implementation project brief-2025"
+              "icon": "lucide-file",
+              "title": "Summary"
             }
           }
         ]
@@ -76,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "29cfd6cbe0ee5050",
@@ -161,8 +164,17 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e24dfc7fef3e26e0",
+  "active": "940312a2bc33996e",
   "lastOpenFiles": [
+    "Screenshot 2568-02-10 at 10.44.06.png",
+    "Screenshot 2568-02-10 at 10.42.31.png",
+    "Screenshot 2568-02-10 at 10.42.15.png",
+    "Screenshot 2568-02-10 at 10.21.21.png",
+    "lecture/4/Lecture8.pdf",
+    "lecture/4/~$Lecture8.pptx",
+    "lecture/4/Lecture8.pptx",
+    "lecture/4/neuroevolution-class.ipynb.json",
+    "snapshot/AI Systems implementation project brief-2025.pdf",
     "snapshot",
     "lecture/Summary.md",
     "snapshot/Screenshot 2568-02-01 at 18.25.36.png",
@@ -172,21 +184,12 @@
     "snapshot/Screenshot 2568-02-01 at 18.23.52.png",
     "snapshot/Screenshot 2568-02-01 at 18.23.35.png",
     "snapshot/Screenshot 2568-02-01 at 18.23.12.png",
-    "snapshot/Screenshot 2568-02-01 at 18.22.30.png",
-    "snapshot/Screenshot 2568-02-01 at 18.22.05.png",
-    "snapshot/Screenshot 2568-02-01 at 18.21.16.png",
     "lecture/2/Note.md",
-    "snapshot/AI Systems implementation project brief-2025.pdf",
     "dataset",
     "pc/2/COMP8260-Class2.pdf",
     "pc/2/index.ipynb",
     "pc/2/draft1.ipynb",
-    "pc/2/index.html",
     "lecture/1/AI System Implementation.md",
-    "lecture/AI Systems implementation project brief-2025.pdf",
-    "lecture/1/Lecture1_Overview.pdf",
-    "lecture/Lecture1_Overview.pdf",
-    "lecture/2/~$Lecture2.pptx",
     "AI System Implementation.md",
     "Welcome.md"
   ]
