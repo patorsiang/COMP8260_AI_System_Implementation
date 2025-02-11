@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "29cfd6cbe0ee5050",
@@ -166,6 +165,7 @@
   },
   "active": "940312a2bc33996e",
   "lastOpenFiles": [
+    "pdf_ict/Summary.pdf",
     "Screenshot 2568-02-10 at 10.44.06.png",
     "Screenshot 2568-02-10 at 10.42.31.png",
     "Screenshot 2568-02-10 at 10.42.15.png",
@@ -183,7 +183,6 @@
     "snapshot/Screenshot 2568-02-01 at 18.24.05.png",
     "snapshot/Screenshot 2568-02-01 at 18.23.52.png",
     "snapshot/Screenshot 2568-02-01 at 18.23.35.png",
-    "snapshot/Screenshot 2568-02-01 at 18.23.12.png",
     "lecture/2/Note.md",
     "dataset",
     "pc/2/COMP8260-Class2.pdf",
