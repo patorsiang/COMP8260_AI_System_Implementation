@@ -73,6 +73,12 @@
 				- e.g., in decision tree models, fix a maximum depth or number of leaves
 				- hyperparameter should be evaluated using a portion of the training dataset called the validation set
 		- Metrics
+		
+				| | Predicted Yes | Predicted No |
+				| - | - | - |
+				| **Actual Yes** (TP + FN) | 50 (TP) | 10 (FN) |
+				| **Actual No** (FP + TN) | 5 (FP) | 35 (TN) |
+
 			- binary classifier accuracy = (TP + TN) / (TP + TN + FP + FN)
 			- precision = TP / (TP + FP)
 			- Recall: 
@@ -166,4 +172,58 @@
 			- Niching
 				- how to manage the evolution of topologies and weights at the same time
 				- defending the compatibility threshold by $c_1 \triangle{G} + x_2 \triangle{W}$, Average of G and Average of W
-				- 
+- Scalability and parallelism
+	- Reason
+		- Training ML Take time - large training
+		- reduce cost and time
+		- improve scalability
+	- method
+		- Hyperparameter search, also parallelisable
+			- early stop poor configurations
+		- Successive halving (sha)
+			- to distinguish the good candidates from the bad
+			- iteration $k=log_2 ⌊R∕r⌋$ when
+				- R(max_resources): resources that would be used to train one candidate if SHA would not be used
+				- r(min_resources): minimum resources that could be used to distinguish good candidates from bad ones
+			- cost 
+				- •N≥R/r so the biggest saving is for  R∕r=N for which ∆ =〖log〗_2⁡N∕N and R_tot^∗=R 〖log〗_2⁡N
+			- time
+				- •SHA is sequential so time $T=Ntime(r)+N/2 time(2r)+…=N∗∑2_(i=1)^log_2⁡〖R∕r〗* time(i∗r_i )/i$
+			- 2 kinds
+				- Synchronous SHA: Split the n_i cadidates of each iteration across m workers; this could be faster than the
+				- Asynchronous SHA: •Assign to each free worker one candidate to run, for iteration i (if nothing to run, create a new candidate to run in iteration i=0)
+		- •Idea: find in which direction to update the weights to reduce the error (loss) of the network 
+			- $L_D (w)=∑_{(x,y)∈D}〖L_{(x,y)} (w) 〗$  We want to compute the gradient of the loss with respect to each weight $∂L/(∂w_{jk}^l )$
+		- Backpropagation (Gradient descent)
+			- •(Mini-batch) Stochastic Gradient Descent (SGD)
+		- Parallel Training Models
+			- Partition the model (weights) across nodes
+			- ![[Screenshot 2568-02-13 at 12.50.32.png]]![[Screenshot 2568-02-13 at 12.50.39.png]]
+			- •Data parallelism: Partition the data across nodes
+				- Ensemble approach: each node train a full replica of the model on the  local partition, then use soft/hard voting during inference
+			- Parallel SGD
+				- weights stored in main memory in case of multicore/GPUs workers or a  parameter server if training is distributed over multiple machines
+				- workers get the current weights then compute gradients of weights based on local data
+		- Summary
+			- Two most time-consuming factors in ML training
+				- Hyperparameter Optimisation (i.e., training many ML models)
+				- Backpropagation (when training NN on big datasets) 
+			- Two ways to reduce these training cost and thus increase scalability
+				- Successive Halving (SHA) approximates the quality of a model using a lower-fidelity model (less data or simpler model)
+				- Stochastic/Mini-batch Gradient Descent approximate the gradient using a sample
+			- Ways to obtain results faster by parallelising computation on multiple worker nodes
+				- Parallel SHA (Synch or Asynch) reduces the time to find hyper-parameters
+				- Parallel SGD (Synch/Asynch or Local) reduces the time to complete training
+	- Future
+		- AI in Industry
+			- bakeries
+			- cancer
+			- healthcase 
+				- hearing loss
+				- eeg analysis -> dream reconstruction
+			- Reinforcement learning 
+				- NEAT
+					- multi agent interaction
+			- conputational creativity
+			- deep fakes
+			- 
